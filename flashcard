@@ -1,0 +1,57 @@
+fscanf usage:
+	fscanf is used to get input from a stream(file, stdin)
+	fscanf should be used to get numbers
+	fscanf(input stream, format specifier, var)
+	ex : fscanf(file_ptr, "%d", &banana) // banana is an integer
+	return: the number of input items matched and assigned
+
+fgets usage:
+	fgets is used to get input from a stream(file, stdin)
+	fgets should be used to get string
+	fgets(char *ptr /* this is the pointer to the string that get the input */,
+		size, input_stream /* like stdin or a file */)
+	ex: char str[n]; FILE *file_ptr;
+ 	    fgets(str[n], n, file_ptr);
+	return: the pointer to the beginning of the string "str".
+
+fopen usage:
+	fopen(file_name, mode)
+	ex: FILE *file_ptr;
+	    file_ptr = fopen("file_name", "r+");
+
+fclose usage:
+	fclose(file_ptr);
+	ex: FILE *file_ptr;
+	    file_ptr = fopen("file_name", "r+");
+	    fclose(file_ptr);
+
+freopen usage:
+	freopen(file_name, mode, stream)
+	freopen used to redirect the out put to file_name instead of stream
+	return: pointer to file_name
+	ex:
+	FILE *ptr;
+	ptr = freopen("file.txt", "r+", stdout);
+	printf("banana\n");
+	// banana will be written in file file.txt, not to stdout
+	
+rewind usage:
+	rewind(file_ptr);
+	make the pointer go to the beginning of the file
+	ex:
+	FILE *file_ptr;
+	file_ptr = fopen("banana.txt", "a+");
+	rewind(file_ptr);
+
+fprintf usage:
+	fprintf(output_stream, char *string, format_specifier);
+	ex: FILE *file_ptr; int i = 5;
+	    fprintf(file_ptr, "this is %d banana", i);
+
+fread usage:
+	fread(void *buffer, size, count, FILE* stream);
+	fread read file from stream with size and number of element read from count
+
+fwrite usage:
+	fwrite(const void *ptr, size, count, FILE* stream);
+	fwrite write from the content that ptr point at to stream

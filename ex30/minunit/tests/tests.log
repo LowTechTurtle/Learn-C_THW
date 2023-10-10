@@ -1,0 +1,18 @@
+DEBUG tests/libex29_tests.c:38:main ----- RUNNING: ./tests/libex29_tests
+DEBUG tests/libex29_tests.c:30:all_tests 
+----- test_dlopen
+DEBUG tests/libex29_tests.c:31:all_tests 
+----- test_functions
+DEBUG tests/libex29_tests.c:32:all_tests 
+----- test_failures
+DEBUG tests/libex29_tests.c:33:all_tests 
+----- test_dlclose
+DEBUG tests/libex29_tests.c:63:main ----- RUNNING: ./tests/libex29_tests
+DEBUG tests/libex29_tests.c:55:all_tests 
+----- test_dlopen
+DEBUG tests/libex29_tests.c:56:all_tests 
+----- test_functions
+DEBUG tests/libex29_tests.c:57:all_tests 
+----- test_failures
+DEBUG tests/libex29_tests.c:58:all_tests 
+----- test_dlclose
