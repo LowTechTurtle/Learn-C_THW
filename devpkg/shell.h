@@ -2,7 +2,7 @@
 #define _shell_h
 
 #define MAX_COMMAND_ARGS 100
-#include<apr_thread_proc.h>
+#include<apr-1/apr_thread_proc.h>
 
 typedef struct Shell {
 	const char *dir;

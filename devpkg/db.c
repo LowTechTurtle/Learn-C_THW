@@ -1,6 +1,6 @@
 #include<unistd.h>
-#include<apr_errno.h>
-#include<apr_file_io.h>
+#include<apr-1/apr_errno.h>
+#include<apr-1/apr_file_io.h>
 
 #include "db.h"
 #include "dbg.h"
@@ -8,7 +8,7 @@
 
 static FILE *DB_open(const char* PATH, const char* mode)
 {
-	return fopen(path, mode);
+	return fopen(PATH, mode);
 }
 
 static void DB_close(FILE *db)
@@ -44,7 +44,7 @@ int DB_update(const char* url)
 		log_info("Already recorded as installed: %s", url);
 	}
 
-	FILE *db = DB_open(DB_file, "a+");
+	FILE *db = DB_open(DB_FILE, "a+");
 	check(db, "Failed to open DB file: %s", DB_FILE);
 
 	bstring line = bfromcstr(url);
@@ -61,20 +61,20 @@ error:
 	return -1;
 }
 
-int DB_find(const char* NULL)
+int DB_find(const char* url)
 {
 	bstring data = NULL;
 	bstring line = bfromcstr(url);
 
 	int res = -1;
 
-	data = DB_load()
+	data = DB_load();
 	check(data, "Failed to load: %s", DB_FILE);
 
 	if (binstr(data, 0, line) == BSTR_ERR) {
 		res = 0;
 	} else {
-		res = -1;
+		res = 1;
 	}
 
 error:
@@ -82,6 +82,7 @@ error:
 		bdestroy(data);
 	if (line)
 		bdestroy(line);
+
 
 	return res;
 }

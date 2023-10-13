@@ -6,7 +6,7 @@ int Shell_exec(Shell template, ...)
 {
 	apr_pool_t *p = NULL;
 	int rc = -1;
-	apr_status_t = APR_SUCCESS;
+	apr_status_t rv = APR_SUCCESS;
 	va_list argp;
 	const char* key = NULL;
 	const char* arg = NULL;
@@ -25,7 +25,7 @@ int Shell_exec(Shell template, ...)
 
 		for (i = 0; template.args[i] != NULL; i++) {
 			if (strcmp(template.args[i], key) == 0) {
-				template.args[i] = args;
+				template.args[i] = arg;
 				replaced_args += 1;
 				break;
 			}
@@ -35,7 +35,7 @@ int Shell_exec(Shell template, ...)
 
 	rc = Shell_run(p, &template);
 	apr_pool_destroy(p);
-	va_end(p);
+	va_end(argp);
 	return rc;
 
 error:
@@ -66,7 +66,7 @@ int Shell_run(apr_pool_t *p, Shell *cmd)
 	rv = apr_proc_create(&newproc, cmd -> exe, cmd -> args, NULL, attr, p);
 	check(rv == APR_SUCCESS, "Failed to run command");
 
-	rv = apr_proc_wait(&newproc, cmd -> exit_code, &cmd -> exit_why, APR_WAIT);
+	rv = apr_proc_wait(&newproc, &cmd -> exit_code, &cmd -> exit_why, APR_WAIT);
 	check(rv == APR_CHILD_DONE, "Failed to wait");
 
 	check(cmd -> exit_code == 0, "%s exited badly", cmd -> exe);
@@ -77,6 +77,14 @@ int Shell_run(apr_pool_t *p, Shell *cmd)
 error:
 	return -1;
 }
+
+Shell CLEANUP_SH = {
+	.exe = "rm",
+	.dir = "/tmp",
+	.args = {"rm", "-rf", "/tmp/pkg-build", "/tmp/pkg-src.tar.gz",
+	       	"/tmp/pkg-src.tar.bz2", "/tmp/DEPENDS", NULL},
+	.MR_args = 0
+};
 
 Shell GIT_SH = { 
 	.dir = "/tmp",
